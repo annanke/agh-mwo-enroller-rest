@@ -64,19 +64,18 @@ public class MeetingBasicRestController {
 		return new ResponseEntity<Collection<Participant>>(participants, HttpStatus.OK);
 	 }
 	 
-	 /*
 	 @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	 public ResponseEntity<?> deleteParticipant(@PathVariable("id") String login){ 
-		 if (participantService.findByLogin(login)==null) {
-			 return new ResponseEntity<>("Unable to delete. Login "+ login+"does not exist.", HttpStatus.NOT_FOUND);
+	 public ResponseEntity<?> deleteMeeting(@PathVariable("id") String id){ 
+		 if (meetingService.findById(id)==null) {
+			 return new ResponseEntity<>("Unable to delete. Meeting "+ id+" does not exist.", HttpStatus.NOT_FOUND);
 		 }else{
-			 Participant participant = participantService.findByLogin(login);
-			 participantService.delete(participant);
+			 Meeting meeting = meetingService.findById(id);
+			 meetingService.delete(meeting);
 			 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		 }
 		
 	 }
-	 
+	 /*	 
 	 @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	 public ResponseEntity<?> updateParticipant(@PathVariable("id") String login, @RequestBody Participant participant){ //dane w formaccie JSON jako body
 		 // sprawdzic czy istnieje
