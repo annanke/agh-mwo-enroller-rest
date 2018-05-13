@@ -23,4 +23,9 @@ public class MeetingService {
 		return query.list();
 	}
 
+	public Meeting findById(String id) {
+		
+		return (Meeting) connector.getSession().get(Meeting.class, id);
+	}
+
 }
