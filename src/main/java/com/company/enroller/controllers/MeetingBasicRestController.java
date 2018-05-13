@@ -17,7 +17,7 @@ import com.company.enroller.persistence.MeetingService;
 import com.company.enroller.persistence.ParticipantService;
 
 @RestController
-@RequestMapping("/meetings") // lokalizacja zasobow, tu dajemy endpointy
+@RequestMapping("/meetings") 
 public class MeetingBasicRestController {
 
 	@Autowired // wstrzyknij instancje ktora znajdziesz
@@ -32,7 +32,7 @@ public class MeetingBasicRestController {
 		return new ResponseEntity<Collection<Meeting>>(meetings, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // RM - metoda obslugujaca zadanie
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET) 
 	public ResponseEntity<?> getMeeting(@PathVariable("id") String id) {
 		Meeting meeting = meetingService.findById(id);
 		if (meeting == null) {
@@ -42,22 +42,28 @@ public class MeetingBasicRestController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<?> addMeeting(@RequestBody Meeting meeting) { // dane w formaccie JSON jako body
+	public ResponseEntity<?> addMeeting(@RequestBody Meeting meeting) {
 		meetingService.addMeeting(meeting);
-		return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED); // zwrocic
+		return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED); 
 
 	}
 
 	@RequestMapping(value = "/{id}/participants", method = RequestMethod.POST)
 	public ResponseEntity<?> addParticipantToMeeting(@PathVariable("id") String id,
-			@RequestBody Participant participant) { // dane w formaccie JSON jako body
+			@RequestBody Participant participant) { 
 		Meeting meeting = meetingService.findById(id);
-		if (meeting != null) {
+		
+		if (meeting == null){
+			return new ResponseEntity<>("meeting with id=" + id + " does not exist", HttpStatus.NOT_FOUND);
+/*		}else if(participantService.findByLogin(participant.getLogin()).getPassword()!=participant.getPassword()) {
+			System.out.println(participantService.findByLogin(participant.getLogin()).getPassword());
+			return new ResponseEntity<>("wrong participant data: "+participantService.findByLogin(participant.getLogin()).getPassword()+" vs "+participant.getPassword(), HttpStatus.BAD_REQUEST);
+		}else if(meeting.getParticipants().contains(participant)) {
+			return new ResponseEntity<>("Participant already belongs to the meeting", HttpStatus.CONFLICT);*/
+		}else{
 			meeting.addParticipant(participant);
 			meetingService.updateMeeting(meeting);
-			return new ResponseEntity<>(HttpStatus.OK); // zwrocic
-		} else {
-			return new ResponseEntity<>("meeting with id=" + id + " does not exist", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.OK); 
 		}
 	}
 
