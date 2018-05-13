@@ -24,10 +24,15 @@ public class MeetingService {
 	}
 
 	public Meeting findById(String id) {
-		//return (Meeting) connector.getSession().get(Meeting.class, Integer.valueOf(id));
 		String hql = "FROM Meeting m where m.id="+id;
 		Query query = connector.getSession().createQuery(hql);
 		return (Meeting)query.list().get(0);
+	}
+
+	public void addMeeting(Meeting meeting) {
+		Transaction transaction = connector.getSession().beginTransaction();
+		connector.getSession().save(meeting);
+		transaction.commit();
 	}
 
 }

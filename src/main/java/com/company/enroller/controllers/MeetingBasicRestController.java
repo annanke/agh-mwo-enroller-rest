@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,18 +35,14 @@ public class MeetingBasicRestController {
 		}
 		return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
 	}
-	/*
+	
 	 @RequestMapping(value = "", method = RequestMethod.POST)
-	 public ResponseEntity<?> registerParticipant(@RequestBody Participant participant){ //dane w formaccie JSON jako body
-		 // sprawdzic czy istnieje
-		 if (participantService.findByLogin(participant.getLogin())!=null) {
-			 return new ResponseEntity<>("Unable to create. Login "+ participant.getLogin()+" exist.", HttpStatus.CONFLICT);
-		 }else{//zapisac
-			 participantService.create(participant);
-			 return new ResponseEntity<>(participant, HttpStatus.CREATED); //zwrocic
-		 }		 
+	 public ResponseEntity<?> addMeeting(@RequestBody Meeting meeting){ //dane w formaccie JSON jako body
+		 	 meetingService.addMeeting(meeting);
+			 return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED); //zwrocic
+		 	 
 	 }
-	 
+	 /* 
 	 @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	 public ResponseEntity<?> deleteParticipant(@PathVariable("id") String login){ 
 		 if (participantService.findByLogin(login)==null) {
