@@ -59,7 +59,7 @@ public class ParticipantRestController {
 		
 	 }
 	 
-	 @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	 @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	 public ResponseEntity<?> updateParticipant(@PathVariable("id") String login, @RequestBody Participant participant){ //dane w formaccie JSON jako body
 		 // sprawdzic czy istnieje
 		 if (participantService.findByLogin(participant.getLogin())==null) {
