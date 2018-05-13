@@ -24,8 +24,10 @@ public class MeetingService {
 	}
 
 	public Meeting findById(String id) {
-		
-		return (Meeting) connector.getSession().get(Meeting.class, id);
+		//return (Meeting) connector.getSession().get(Meeting.class, Integer.valueOf(id));
+		String hql = "FROM Meeting m where m.id="+id;
+		Query query = connector.getSession().createQuery(hql);
+		return (Meeting)query.list().get(0);
 	}
 
 }
