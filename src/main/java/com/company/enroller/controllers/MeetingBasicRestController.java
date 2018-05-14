@@ -51,15 +51,25 @@ public class MeetingBasicRestController {
 	@RequestMapping(value = "/{id}/participants", method = RequestMethod.POST)
 	public ResponseEntity<?> addParticipantToMeeting(@PathVariable("id") String id,
 			@RequestBody Participant participant) { 
-		Meeting meeting = meetingService.findById(id);
 		
+		Meeting meeting = meetingService.findById(id);
 		if (meeting == null){
 			return new ResponseEntity<>("meeting with id=" + id + " does not exist", HttpStatus.NOT_FOUND);
-/*		}else if(participantService.findByLogin(participant.getLogin()).getPassword()!=participant.getPassword()) {
-			System.out.println(participantService.findByLogin(participant.getLogin()).getPassword());
-			return new ResponseEntity<>("wrong participant data: "+participantService.findByLogin(participant.getLogin()).getPassword()+" vs "+participant.getPassword(), HttpStatus.BAD_REQUEST);
-		}else if(meeting.getParticipants().contains(participant)) {
-			return new ResponseEntity<>("Participant already belongs to the meeting", HttpStatus.CONFLICT);*/
+		}
+		
+		Collection<Participant> meetingParticipants = meeting.getParticipants();
+		boolean participateInMeeting=false;
+		
+		for (Participant meetingParticipant : meetingParticipants) {
+			if (meetingParticipant.getLogin().equals(participant.getLogin())) {
+				participateInMeeting=true;
+				break;
+			}
+		}
+		if(!participantService.findByLogin(participant.getLogin()).getPassword().equals(participant.getPassword())) {
+			return new ResponseEntity<>("wrong participant data", HttpStatus.BAD_REQUEST);
+		}else if(participateInMeeting) {
+			return new ResponseEntity<>("Participant already belongs to the meeting", HttpStatus.CONFLICT);
 		}else{
 			meeting.addParticipant(participant);
 			meetingService.updateMeeting(meeting);
@@ -91,7 +101,6 @@ public class MeetingBasicRestController {
 	public ResponseEntity<?> deleteParticipantFromMeeting(@PathVariable("id") String id,
 			@PathVariable("participantId") String participantLogin) {
 		Meeting meeting = meetingService.findById(id);
-		Collection<Participant> participants = meeting.getParticipants();
 		Participant participant = participantService.findByLogin(participantLogin);
 		if ( participant== null ) {
 			return new ResponseEntity<>("Unable to delete. Participant " + participantLogin + " does not belong to the meeting.", HttpStatus.NOT_FOUND);
