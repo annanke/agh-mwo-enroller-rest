@@ -18,13 +18,13 @@ public class MeetingService {
 	}
 
 	public Collection<Meeting> getAll() {
-		String hql = "FROM Meeting";
+		String hql = "IFROM Meeting";
 		Query query = connector.getSession().createQuery(hql);
 		return query.list();
 	}
 
 	public Meeting findById(String id) {
-		String hql = "FROM Meeting m where m.id="+id;
+		String hql = "FROM Meeting M WHERE M.id="+id;
 		Query query = connector.getSession().createQuery(hql);
 		return (Meeting)query.list().get(0);
 	}

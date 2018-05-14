@@ -34,11 +34,11 @@ public class Meeting {
 	@Column
 	private String date;
 
-	/*@JsonIgnore
+	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "meeting_participant", joinColumns = { @JoinColumn(name = "meeting_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "participant_login") })
-	Set<Participant> participants = new HashSet<>();*/
+	Set<Participant> participants = new HashSet<>();
 
 	public long getId() {
 		return id;
@@ -72,7 +72,7 @@ public class Meeting {
 		this.date = date;
 	}
 	
-/*	public void addParticipant(Participant participant) {
+	public void addParticipant(Participant participant) {
 		this.participants.add(participant);
 	}
 	
@@ -82,6 +82,6 @@ public class Meeting {
 	
 	public Collection<Participant> getParticipants() {
 		return participants;
-	}*/
+	}
 
 }
