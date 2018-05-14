@@ -18,7 +18,7 @@ import com.company.enroller.persistence.ParticipantService;
 
 @RestController
 @RequestMapping("/meetings") 
-public class MeetingBasicRestController {
+public class MeetingRestController {
 
 	@Autowired // wstrzyknij instancje ktora znajdziesz
 	MeetingService meetingService; // nie inicjalizuje
