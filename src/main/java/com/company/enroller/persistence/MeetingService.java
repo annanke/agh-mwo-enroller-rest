@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
 import com.company.enroller.model.Meeting;
+import com.company.enroller.model.Participant;
 
 @Component("meetingService")
 public class MeetingService {
@@ -17,10 +18,14 @@ public class MeetingService {
 		connector = DatabaseConnector.getInstance();
 	}
 
-	public Collection<Meeting> getAll() {
+/*	public Collection<Meeting> getAll() {
 		String hql = "IFROM Meeting";
 		Query query = connector.getSession().createQuery(hql);
 		return query.list();
+	}*/
+	
+	public Collection<Meeting> getAll() {
+		return connector.getSession().createCriteria(Meeting.class).list();
 	}
 
 	public Meeting findById(String id) {
