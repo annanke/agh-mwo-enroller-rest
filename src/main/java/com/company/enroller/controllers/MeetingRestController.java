@@ -23,9 +23,9 @@ public class MeetingRestController {
 	@Autowired // wstrzyknij instancje ktora znajdziesz
 	MeetingService meetingService; // nie inicjalizuje
 
-	@Autowired 
+	/*@Autowired 
 	ParticipantService participantService; 
-	
+	*/
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<?> getParticipants() {
 		Collection<Meeting> meetings = meetingService.getAll();
