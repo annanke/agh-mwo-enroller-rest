@@ -29,9 +29,17 @@ public class MeetingService {
 	}
 
 	public Meeting findById(String id) {
-		String hql = "FROM Meeting M WHERE M.id="+id;
+/*		String hql = "FROM Meeting M WHERE M.id="+id;
 		Query query = connector.getSession().createQuery(hql);
-		return (Meeting)query.list().get(0);
+		return (Meeting)query.list().get(0);*/
+		Collection<Meeting> meetingsList = connector.getSession().createCriteria(Meeting.class).list();
+		Meeting foundMeeting=null;
+		for (Meeting meeting : meetingsList) {
+			if (String.valueOf(meeting.getId()).equals(id)) {
+				foundMeeting=meeting;
+			}
+		}
+		return foundMeeting;
 	}
 
 	public void addMeeting(Meeting meeting) {
