@@ -48,7 +48,7 @@ public class MeetingRestController {
 
 	}
 
-	@RequestMapping(value = "/{id}/participants", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/{id}/participants", method = RequestMethod.POST)
 	public ResponseEntity<?> addParticipantToMeeting(@PathVariable("id") String id,
 			@RequestBody Participant participant) { 
 		
@@ -111,5 +111,5 @@ public class MeetingRestController {
 		}
 
 	}
-
+*/
 }
