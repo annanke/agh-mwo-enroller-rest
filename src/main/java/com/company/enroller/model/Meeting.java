@@ -39,6 +39,11 @@ public class Meeting {
 	@JoinTable(name = "meeting_participant", joinColumns = { @JoinColumn(name = "meeting_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "participant_login") })
 	Set<Participant> participants = new HashSet<>();
+	
+	//zmiana waznosci tabel
+/*	@JsonIgnore
+	@ManyToMany(mappedBy = "meetings")
+	Set<Participant> participants = new HashSet<>();*/
 
 	public long getId() {
 		return id;

@@ -62,9 +62,9 @@ public class ParticipantRestController {
 	 @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	 public ResponseEntity<?> updateParticipant(@PathVariable("id") String login, @RequestBody Participant participant){ //dane w formaccie JSON jako body
 		 // sprawdzic czy istnieje
-		 if (participantService.findByLogin(participant.getLogin())==null) {
+		 if ((participantService.findByLogin(participant.getLogin()))==null) {
 			 participantService.create(participant);
-			 return new ResponseEntity<>("Login "+ participant.getLogin()+" did not exist. it was created", HttpStatus.NOT_FOUND);
+			 return new ResponseEntity<>("Login "+ participant.getLogin()+" did not exist. it was created", HttpStatus.CREATED);
 		 }else{//zapisac
 			 if (!participant.getLogin().equals(login)) {
 				 return new ResponseEntity<>("you try to change different user "+ participant.getLogin(), HttpStatus.CONFLICT);	 

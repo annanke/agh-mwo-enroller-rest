@@ -24,10 +24,11 @@ public class ParticipantService {
 		return (Participant)connector.getSession().get(Participant.class, login); //get zwraca Obcejt wiec trzeba zrzutowac
 	}
 
-	public void create(Participant participant) {
+	public Participant create(Participant participant) {
 		Transaction transaction = connector.getSession().beginTransaction();
 		connector.getSession().save(participant);
 		transaction.commit();
+		return participant;
 	}
 
 	public void delete(Participant participant) {
